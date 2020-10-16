@@ -1,0 +1,42 @@
+<html>
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>                    
+        <script>
+            $(document).ready(function(){
+
+                $.getJSON( "summary.json", function( data ) {
+                    key = "statproduct1"
+                    var items = []
+                    $.each( data.workspace.channels, function( key,val ) {
+                        items.push( "<li>" + val.name + " " + val.nbins + " bins" + "</li>" );
+                    })
+                    console.log(items)
+                    $( "<ul/>", {
+                        html: items.join( "" )
+                    }).appendTo( "#" + key + "-basemodel" );
+
+                    var items = []
+                    $.each( data.patchsets, function( key,val ) {
+                        items.push( "<li>" +  val.metadata.description    + ": " + val.npatches + " patches" + "</li>" );
+                    })
+                    console.log(items)
+                    $( "<ul/>", {
+                        html: items.join( "" )
+                    }).appendTo( "#" + key + "-patchsets    " );
+                })
+            })
+                        
+        </script>
+    </head>
+    <body>
+        <div id="statproduct1">
+            <h3>Stats Bundle</h3>
+            <div id="statproduct1-basemodel">
+                <h4>Base Model Channels</h4>
+            </div>
+            <div id="statproduct1-patchsets">
+                <h4>Patchsets</h4>
+            </div>
+        </div>
+    </body>
+</html>
